@@ -55,6 +55,8 @@ class CurlTest(unittest.TestCase):
 
         # Validate HTTP response code, fail if not 200
         self.assertEqual(status_code, 200)
+
+        
         # print (response_data)
 
 
