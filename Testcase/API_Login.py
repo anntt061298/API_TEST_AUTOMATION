@@ -47,6 +47,7 @@ class CurlTest(unittest.TestCase):
         # self.payload = dict(PAYLOAD)  # Khôi phục bản sao của PAYLOAD
         self.payload = copy.deepcopy(PAYLOAD)  # Tạo bản sao của PAYLOAD
 
+    # @unittest.skip("skipped")
     def test01(self):
         """ Login.01: Login successfull """
         url = BASE_URL + "login"
@@ -65,12 +66,13 @@ class CurlTest(unittest.TestCase):
         self.assertEqual(response_data["accountList"][0]["subNumber"], "0001158527NM")
         self.assertEqual(response_data["accountList"][0]["cusType"], "I")
 
+    # @unittest.skip("skipped")
     def test02(self):
         """ Login.02: Login fail : Missing field grant_type """
         url = BASE_URL + "login"
 
         self.payload["grant_type"] = ""
-        print(PAYLOAD)
+        # print(PAYLOAD)
     
         # Send POST request
         status_code, response_data = send_request(
@@ -81,6 +83,7 @@ class CurlTest(unittest.TestCase):
         self.assertEqual(status_code, 422)
         # print (response_data)
 
+    # @unittest.skip("skipped")
     def test03(self):
         """ Login.03: Login fail : Delete field grant_type """
         url = BASE_URL + "login"
@@ -96,12 +99,13 @@ class CurlTest(unittest.TestCase):
         self.assertEqual(status_code, 422)
         # print (response_data)
 
+    # @unittest.skip("skipped")
     def test04(self):
         """ Login.04: Login fail : Missing enter client_id  """
         url = BASE_URL + "login"
 
         self.payload["client_id"] = ""
-        print(self.payload)
+        # print(self.payload)
     
         # Send POST request
         status_code, response_data = send_request(
@@ -112,6 +116,7 @@ class CurlTest(unittest.TestCase):
         self.assertEqual(status_code, 422)
         # print (response_data)
 
+    # @unittest.skip("skipped")
     def test05(self):
         """ Login.05: Login fail : Delete field client_id  """
         url = BASE_URL + "login"
@@ -127,6 +132,7 @@ class CurlTest(unittest.TestCase):
         self.assertEqual(status_code, 422)
         # print (response_data)
 
+    # @unittest.skip("skipped")
     def test06(self):
         """ Login.06: Login fail : Missing enter field client_secret  """
         url = BASE_URL + "login"
@@ -142,6 +148,7 @@ class CurlTest(unittest.TestCase):
         self.assertEqual(status_code, 422)
         # print (response_data)
 
+    # @unittest.skip("skipped")
     def test07(self):
         """ Login.07: Login fail : Delete field client_secret  """
         url = BASE_URL + "login"
@@ -157,6 +164,7 @@ class CurlTest(unittest.TestCase):
         self.assertEqual(status_code, 422)
         # print (response_data)
 
+    # @unittest.skip("skipped")
     def test08(self):
         """ Login.08: Login fail : Missing enter field platform  """
         url = BASE_URL + "login"
@@ -172,6 +180,7 @@ class CurlTest(unittest.TestCase):
         self.assertEqual(status_code, 422)
         # print (response_data)
 
+    # @unittest.skip("skipped")
     def test09(self):
         """ Login.09: Login fail : Delete field platform  """
         url = BASE_URL + "login"
@@ -188,6 +197,7 @@ class CurlTest(unittest.TestCase):
         # print (response_data)
 
 
+    # @unittest.skip("skipped")
     def test10(self):
         """ Login.10: Login fail : Missing enter field Username """
         url = BASE_URL + "login"
@@ -202,6 +212,7 @@ class CurlTest(unittest.TestCase):
         # Validate HTTP response code, fail if not 200
         self.assertEqual(status_code, 422)
 
+    # @unittest.skip("skipped")
     def test11(self):
         """ Login.11: Login fail : Delete field Username """
         url = BASE_URL + "login"
@@ -216,19 +227,30 @@ class CurlTest(unittest.TestCase):
         # Validate HTTP response code, fail if not 200
         self.assertEqual(status_code, 422)
 
+
+    # @unittest.skip("skipped")
     def test12(self):
         """ Login.12: Login fail : Enter username dont exist """
         url = BASE_URL + "login"
 
-#         PAYLOAD = {
-#                     "grant_type": "password",
-#                     "client_id": "grooo",
-#                     "client_secret": "grooo",
-#                     "platform": "WEB",
-#                     "username": "USLorem Ipsum is simply dummy text of the printing and typesetting industry.ERNAME",
-#                     "password": PASSWORD
-# }
         self.payload["username"] = "USLorem Ipsum is simply dummy text of the printing and typesetting industry.ERNAME"
+        # print(self.payload)
+
+        # Send POST request
+        status_code, response_data = send_request(
+            url=url, method="POST", headers=headers, data = self.payload
+        )
+
+        # Validate HTTP response code, fail if not 200
+        self.assertEqual(status_code, 400)
+    
+
+    # @unittest.skip("skipped")
+    def test13(self):
+        """ Login.13: Login fail : Enter password wrong """
+        url = BASE_URL + "login"
+
+        self.payload["password"] = "USLorem Ipsum is simply dummy text of the printing and typesetting industry.ERNAME"
         # print(self.payload)
 
         # Send POST request
