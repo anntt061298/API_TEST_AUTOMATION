@@ -21,33 +21,33 @@ def testcase_sort_func(a,b):
 #     config.read(config_file)
 #     return config
 
-# def login_success():
+def login_success():
     
-#     url = "https://wts.finavi.com.vn/api/v1/"
+    url = "https://wts.finavi.com.vn/api/v1/login"
 
-#     # Headers
-#     headers = {
-#         "Content-Type": "application/json; charset=UTF-8",        
-#     }
+    # Headers
+    headers = {
+        "Content-Type": "application/json; charset=UTF-8",        
+    }
 
-#     data = {
-#     "grant_type": "password",
-#     "client_id": "grooo",
-#     "client_secret": "grooo",
-#     "platform": "WEB",
-#     "username": "An061298",
-#     "password": "ThuAn061298"
-# }
+    data = {
+    "grant_type": "password",
+    "client_id": "grooo",
+    "client_secret": "grooo",
+    "platform": "WEB",
+    "username": "An061298",
+    "password": "ThuAn061298"
+}
 
-#     response = requests.post(url, json=data, headers=headers)
-#     if response.status_code == 200:
-#         data = response.json()
-#         refresh_token = data.get("refreshToken")
-#         return refresh_token
-#     else:
-#         print(f"Error refreshing access token: {response.status_code}")
-#         print(response.text)
-#         return None
+    response = requests.post(url, json=data, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        refresh_token = data.get("accessToken")
+        return refresh_token
+    else:
+        print(f"Error refreshing access token: {response.status_code}")
+        print(response.text)
+        return None
 
 
 def send_request(url, method, headers=None, data=None):
