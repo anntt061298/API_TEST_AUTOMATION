@@ -22,7 +22,7 @@ headers = {
     "environment": "tradeforgood",
 }
 
-USERNAME = "advisor01@gmail.com"
+USERNAME = "operator01@gmail.com"
 PASSWORD = "Ab@12345"
 
 Payload = {
