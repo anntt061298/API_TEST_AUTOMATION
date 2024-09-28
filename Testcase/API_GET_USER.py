@@ -18,6 +18,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from test_utils import *
 
 BASE_URL = f"https://wts.finavi.com.vn/api/v1/"
+
 headers = {
         "Content-Type": "application/json; charset=UTF-8"        
     }

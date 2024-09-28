@@ -38,14 +38,9 @@ class CurlTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         pass
-        # refresh_token = read_refresh_token_config()
-        # time.sleep(2)
-        # cls.access_token = refresh_access_token(refresh_token)
 
     def setUp(self):
-    # This method will be run before each test case
-        # self.payload = dict(PAYLOAD)  # Khôi phục bản sao của PAYLOAD
-        self.payload = copy.deepcopy(PAYLOAD)  # Tạo bản sao của PAYLOAD
+        self.payload = copy.deepcopy(PAYLOAD)  
 
     # @unittest.skip("skipped")
     def test01(self):
@@ -107,7 +102,7 @@ class CurlTest(unittest.TestCase):
         self.payload["client_id"] = ""
         # print(self.payload)
     
-        # Send POST request
+       # Send POST request
         status_code, response_data = send_request(
             url=url, method="POST", headers=headers, data = self.payload
         )

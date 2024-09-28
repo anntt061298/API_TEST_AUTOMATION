@@ -16,10 +16,7 @@ def testcase_sort_func(a,b):
     names.sort(reverse=True)
     return [1,-1][names[0] == b]
 
-# def read_refresh_token_config(config_file='config1.ini'):
-#     config = configparser.ConfigParser()
-#     config.read(config_file)
-#     return config
+
 
 def login_success():
     
