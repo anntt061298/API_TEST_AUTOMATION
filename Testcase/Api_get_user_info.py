@@ -9,8 +9,6 @@ import os
 import time
 import copy
 
-
-
 # Thêm thư mục cha của test_utils vào sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -36,8 +34,8 @@ class CurlTest(unittest.TestCase):
         pass
 
     # @unittest.skip("skipped")
-    def test01(self):
-        """ Login.01:Get success userinfo  """
+    def test_001(self):
+        """ GET_USER_INFO_001:Get success userinfo  """
 
         url = BASE_URL + "user/info"
 
@@ -55,8 +53,8 @@ class CurlTest(unittest.TestCase):
         
 
     # @unittest.skip("skipped")
-    def test02(self):
-        """ Login.02: Wrong with missing enter token  """
+    def test_002(self):
+        """ GET_USER_INFO_002: Wrong with missing enter token  """
 
         url = BASE_URL + "user/info"
 
@@ -69,8 +67,8 @@ class CurlTest(unittest.TestCase):
         self.assertEqual(status_code, 401)
 
     # @unittest.skip("skipped")
-    def test03(self):
-        """ Login.03: Wrong with token invalid """
+    def test_003(self):
+        """ GET_USER_INFO_003: Wrong with token invalid """
 
         url = BASE_URL + "user/info"
 
@@ -87,8 +85,8 @@ class CurlTest(unittest.TestCase):
         self.assertEqual(status_code, 401)
 
     # @unittest.skip("skipped")
-    def test04(self):
-        """ Login.03: Wrong with token expire """
+    def test_004(self):
+        """ GET_USER_INFO_004: Wrong with token expire """
 
         url = BASE_URL + "user/info"
 
