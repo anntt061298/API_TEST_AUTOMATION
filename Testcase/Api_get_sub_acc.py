@@ -35,7 +35,7 @@ class CurlTest(unittest.TestCase):
 
     # @unittest.skip("skipped")
     def test_001(self):
-        """ GET_SUB_ACC_001:Get success userinfo  """
+        """ GET_SUB_ACC_001:Get success sub account  """
 
         url = BASE_URL + "user/subAcc"
 

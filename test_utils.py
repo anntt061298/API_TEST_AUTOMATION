@@ -47,12 +47,12 @@ def login_success():
         return None
 
 
-def send_request(url, method, headers=None, data=None):
+def send_request(url, method, headers=None, data=None, params = None):
     status_code = None
     response_data = None
 
     if method == "GET":
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, params= params )
         status_code = response.status_code
         if response.status_code == 200:
             response_data =  response.json()
