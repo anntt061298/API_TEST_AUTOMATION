@@ -7,7 +7,8 @@ import unittest
 import sys
 import os
 import time
-import copy
+from datetime import datetime
+
 
 # Thêm thư mục cha của test_utils vào sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -16,9 +17,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from test_utils import *
 
 BASE_URL = f"https://wts.finavi.com.vn/api/v1/"
-
-Account = "050C158527"
-
+name_exist = "ddd"
 
 class CurlTest(unittest.TestCase):
     @classmethod
@@ -28,10 +27,12 @@ class CurlTest(unittest.TestCase):
 
     def setUp(self):
 
-        self.base_url = BASE_URL+ "bridge/Account/GetMyStockList"
+        timestamp = str(datetime.now().timestamp())
 
-        self.params = {
-            "CUSTODYCD": Account
+        self.base_url = BASE_URL+ "favorite"
+
+        self.Payload = {
+            "name": "fav" + timestamp
         }
 
         self.header = {
@@ -42,11 +43,11 @@ class CurlTest(unittest.TestCase):
 
     # @unittest.skip("skipped")
     def test_001(self): 
-        """ GET_MY_STOCK_LIST_001: Get My stock list success """
+        """CREATE_FAVORITE_001: Create my favorite success """
 
         # Send POST request
         status_code, response_data = send_request(
-            self.base_url, method="GET", headers=self.header, params= self.params
+            self.base_url, method="POST", headers=self.header, data = self.Payload
         )
 
         # Validate HTTP response code, fail if not 200
@@ -54,13 +55,12 @@ class CurlTest(unittest.TestCase):
 
     # @unittest.skip("skipped")
     def test_002(self):
-        """ GET_MY_STOCK_LIST_002: Get My stocklist when miss param  """
+        """CREATE_FAVORITE_002: Create favorite fail when mising name """
 
-        url = BASE_URL + "user/info"
-
+        self.Payload["name"]= ""
         # Send POST request
         status_code, response_data = send_request(
-            self.base_url,  method="GET", headers= self.header
+            self.base_url, method="POST", headers=self.header, data = self.Payload
         )
 
         # Validate HTTP response code, fail if not 200
@@ -68,14 +68,13 @@ class CurlTest(unittest.TestCase):
 
     # @unittest.skip("skipped")
     def test_003(self):
-        """ GET_MY_STOCK_LIST_003: Get My stocklist when enter param null  """
+        """CREATE_FAVORITE_003: Create favorite fail when deleate name """
 
-        url = BASE_URL + "user/info"
-
-        self.params["CUSTODYCD"]= ""
+        del self.Payload["name"]
+        
         # Send POST request
         status_code, response_data = send_request(
-            self.base_url, method="GET",  headers= self.header, params= self.params
+            self.base_url, method="POST", headers=self.header, data = self.Payload
         )
 
         # Validate HTTP response code, fail if not 200
@@ -83,45 +82,53 @@ class CurlTest(unittest.TestCase):
 
     # @unittest.skip("skipped")
     def test_004(self):
-        """ GET_MY_STOCK_LIST_004: Get My stocklist when enter param invalid  """
+        """CREATE_FAVORITE_004: Create favorite fail when enter Name existed """
 
-        url = BASE_URL + "user/info"
-
-        self.params["CUSTODYCD"]= "123"
+        self.Payload["name"]= name_exist
 
         # Send POST request
         status_code, response_data = send_request(
-            self.base_url, method="GET",  headers= self.header, params= self.params
+            self.base_url, method="POST", headers=self.header, data = self.Payload
+        )
+
+        # Validate HTTP response code, fail if not 200
+        self.assertEqual(status_code, 400)
+
+    # @unittest.skip("skipped")
+    def test_005(self):
+        """CREATE_FAVORITE_005: Create favorite fail when enter Name exceed maxlength 20 """
+
+        name = "a"*21
+        self.Payload["name"]= name
+
+        # Send POST request
+        status_code, response_data = send_request(
+            self.base_url, method="POST", headers=self.header, data = self.Payload
         )
 
         # Validate HTTP response code, fail if not 200
         self.assertEqual(status_code, 422)
 
-    # @unittest.skip("skipped")
-    def test_005(self):
-        """ GET_MY_STOCK_LIST_005: Get My stocklist when missing token """
+        # @unittest.skip("skipped")
+    def test_006(self):
+        """CREATE_FAVORITE_006: Create favorite fail  when enter token invalid """
 
-        url = BASE_URL + "user/info"
-
-        del self.header["Authorization"]
-
+        self.header["Authorization"] = "123"
         # Send POST request
         status_code, response_data = send_request(
-            self.base_url, method="GET", headers= self.header, params= self.params
+            self.base_url, method="POST", headers=self.header, data = self.Payload
         )
 
         # Validate HTTP response code, fail if not 200
         self.assertEqual(status_code, 401)
 
-        # @unittest.skip("skipped")
-    def test_006(self):
-        """ GET_MY_STOCK_LIST_006: Get My stocklist when enter token invalid """
+    def test_007(self):
+        """CREATE_FAVORITE_007: Create favorite fail  when missing enter token """
 
-        url = BASE_URL + "user/info"
-        self.header["Authorization"] = "123"
+        del self.header["Authorization"]
         # Send POST request
         status_code, response_data = send_request(
-            self.base_url, method="GET", headers= self.header, params= self.params
+            self.base_url, method="POST", headers=self.header, data = self.Payload
         )
 
         # Validate HTTP response code, fail if not 200
