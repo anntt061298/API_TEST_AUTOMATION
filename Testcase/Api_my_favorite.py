@@ -39,8 +39,10 @@ class CurlTest(unittest.TestCase):
         "Content-Type": "application/json; charset=UTF-8"  ,     
         "Authorization":  f"Bearer {CurlTest.Access_Token}"
     }
- 
+        
+        self.Favorite_ID =  None
 
+    ### API CREATE FAVORITE ###
     # @unittest.skip("skipped")
     def test_001(self): 
         """CREATE_FAVORITE_001: Create my favorite success """
@@ -51,7 +53,10 @@ class CurlTest(unittest.TestCase):
         )
 
         # Validate HTTP response code, fail if not 200
-        self.assertEqual(status_code, 200)     
+        self.assertEqual(status_code, 200) 
+
+        self.Favorite_ID = response_data["id"]
+        print (self.Favorite_ID)
 
     # @unittest.skip("skipped")
     def test_002(self):
@@ -133,6 +138,50 @@ class CurlTest(unittest.TestCase):
 
         # Validate HTTP response code, fail if not 200
         self.assertEqual(status_code, 401)
+
+        ### API GET MY FAVORITE ###
+        
+    def test_008(self): 
+        """GET_FAVORITE_001: Get my favorite success """
+
+        if self.Favorite_ID is None:
+            self.skipTest
+
+        # Send POST request
+        status_code, response_data = send_request(
+            self.base_url, method="GET", headers=self.header
+        )
+
+        # Validate HTTP response code, fail if not 200
+        self.assertEqual(status_code, 200) 
+        self.assertEqual(response_data[-1]["id"] , self.Favorite_ID)
+
+    def test_009(self): 
+        """GET_FAVORITE_002: Get my favorite fail when missing token """
+
+        del self.header["Authorization"]
+
+        # Send POST request
+        status_code, response_data = send_request(
+            self.base_url, method="GET", headers=self.header
+        )
+
+        # Validate HTTP response code, fail if not 200
+        self.assertEqual(status_code, 401) 
+
+    def test_010(self): 
+        """GET_FAVORITE_003: Get my favorite fail when enter invalid token """
+
+        self.header["Authorization"] = "123"
+
+        # Send POST request
+        status_code, response_data = send_request(
+            self.base_url, method="GET", headers=self.header
+        )
+
+        # Validate HTTP response code, fail if not 200
+        self.assertEqual(status_code, 401) 
+
 
 if __name__ == "__main__":
     from argparse import ArgumentParser
